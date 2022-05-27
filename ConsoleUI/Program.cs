@@ -1,5 +1,5 @@
 ﻿using Business.Concrete;
-using DataAccess.Concrete.InMemory;
+using DataAccess.Concrete.EntityFramework;
 using System;
 
 namespace ConsoleUI
@@ -13,14 +13,33 @@ namespace ConsoleUI
 
             //GetAllTest();
 
+            //GetByCarsBrandIdTest();
 
-        
+            //GetByCarsColorIdTest();
+
         }
 
+        private static void GetByCarsBrandIdTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarsByBrandId(1))
+            {
+                Console.WriteLine(car.Name + " " + car.ModelYear);
+            }
+        }
+
+        private static void GetByCarsColorIdTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarsByColorId(1))
+            {
+                Console.WriteLine(car.Name + " " + car.ModelYear);
+            }
+        }
 
         private static void GetAllTest()
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
+            CarManager carManager = new CarManager(new EfCarDal());
             foreach (var car in carManager.GetAll())
             {
                 Console.WriteLine(car.Description + " " + car.ModelYear);
@@ -29,11 +48,9 @@ namespace ConsoleUI
 
         private static void GetByIdTest()
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
-            foreach (var car in carManager.GetById())
-            {
-                Console.WriteLine(car.Name);
-            }
+            CarManager carManager = new CarManager(new EfCarDal());
+            var result = carManager.GetById(1);
+            Console.WriteLine(result);
         }
     }
 }
